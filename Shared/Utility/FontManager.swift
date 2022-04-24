@@ -15,27 +15,10 @@ public var BUNDLE_ID: Bundle = Bundle(identifier: "oatxz.communityshelf.LMWN-Coi
 public extension UIFont {
     
     enum Family: String {
-        case black          = "Roboto-Black"
-        case blackItalic    = "Roboto-BlackItalic"
         case bold           = "Roboto-Bold"
-        case boldItalic     = "Roboto-BoldItalic"
-        case italic         = "Roboto-Italic"
         case light          = "Roboto-Light"
-        case lightItalic    = "Roboto-LightItalic"
-        case medium         = "Roboto-Medium"
-        case mediumItalic   = "Roboto-MediumItalic"
         case regular        = "Roboto-Regular"
         case thin           = "Roboto-Thin"
-        case thinItalic     = "Roboto-ThinItalic"
-        
-        enum Condensed: String {
-            case bold        = "RobotoCondensed-Bold"
-            case boldItalic  = "RobotoCondensed-BoldItalic"
-            case italic      = "RobotoCondensed-Italic"
-            case light       = "RobotoCondensed-Light"
-            case lightItalic = "RobotoCondensed-LightItalic"
-            case regular     = "RobotoCondensed-Regular"
-        }
         
         /// easy to change default app font family
         static let defaultFamily = Family.regular
@@ -51,24 +34,10 @@ public extension UIFont {
     //MARK: - load framework font in application
     static let loadAllFonts: () = {
         DISPATCH_CONFIG.async {
-            registerFontWith(filenameString: Family.black.rawValue)
-            registerFontWith(filenameString: Family.blackItalic.rawValue)
             registerFontWith(filenameString: Family.bold.rawValue)
-            registerFontWith(filenameString: Family.boldItalic.rawValue)
-            registerFontWith(filenameString: Family.italic.rawValue)
             registerFontWith(filenameString: Family.light.rawValue)
-            registerFontWith(filenameString: Family.lightItalic.rawValue)
-            registerFontWith(filenameString: Family.medium.rawValue)
-            registerFontWith(filenameString: Family.mediumItalic.rawValue)
             registerFontWith(filenameString: Family.regular.rawValue)
             registerFontWith(filenameString: Family.thin.rawValue)
-            registerFontWith(filenameString: Family.thinItalic.rawValue)
-            registerFontWith(filenameString: Family.Condensed.bold.rawValue)
-            registerFontWith(filenameString: Family.Condensed.boldItalic.rawValue)
-            registerFontWith(filenameString: Family.Condensed.italic.rawValue)
-            registerFontWith(filenameString: Family.Condensed.light.rawValue)
-            registerFontWith(filenameString: Family.Condensed.lightItalic.rawValue)
-            registerFontWith(filenameString: Family.Condensed.regular.rawValue)
         }
     }()
 
@@ -152,5 +121,14 @@ public extension Font {
     
     init(_ size: CGFloat, _ weight: UIFont.CustomWeight) {
         self.init(UIFont(size, weight))
+    }
+}
+
+struct Fonts {
+    struct Roboto {
+        static let bold    = "Roboto-Bold"
+        static let light   = "Roboto-Light"
+        static let regular = "Roboto-Regular"
+        static let thin    = "Roboto-Thin"
     }
 }

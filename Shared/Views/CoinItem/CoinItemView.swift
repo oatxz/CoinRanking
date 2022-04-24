@@ -7,59 +7,62 @@
 
 import SwiftUI
 import Kingfisher
-import SVGKit
-import SVProgressHUD
 
 struct CoinItemView: View {
     let item: CoinItemModel
+    private var onClickItem: () -> ()
     
-    init(item: CoinItemModel) {
+    init(item: CoinItemModel, onClickItem: @escaping () -> ()) {
         self.item = item
+        self.onClickItem = onClickItem
     }
     
     var body: some View {
-        VStack {
-            Spacer(minLength: 20)
-            HStack(alignment: .top) {
-                KFImage(URL(string: item.iconUrl))
-                    .placeholder({
-                        Color.secondary
-                    })
-                    .setProcessor(SVGImgProcessor())
-                    .cacheOriginalImage()
-                    .fade(duration: 0.25)
-                    .cancelOnDisappear(true)
-                    .resizable()
-                    .clipShape(Capsule())
-                    .frame(width: 40, height: 40, alignment: .center)
-                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                    .accessibility(identifier: "coinItem\(item.symbol)_image_icon")
-                VStack(spacing: 5) {
-                    HStack {
-                        Text(item.name)
-                            .font(.bodyBold)
-                            .foregroundColor(.black)
-                            .accessibility(identifier: "coinItem\(item.symbol)_text_name")
-                            .lineLimit(1)
-                        Spacer(minLength: 8)
-                        Text("$\(String(format: "%.5f", item.price))")
-                            .font(.extraSmallBold)
-                            .foregroundColor(.black)
-                            .accessibility(identifier: "coinItem\(item.symbol)_text_price")
-                    }
-                    HStack {
-                        Text(item.symbol)
-                            .font(.smallBold)
-                            .foregroundColor(.secondary)
-                            .accessibility(identifier: "coinItem\(item.symbol)_text_symbol")
-                        Spacer()
-                        ChangeView(number: item.change, isGreenColor: item.isChangePositive)
-                            .accessibility(identifier: "coinItem\(item.symbol)_text_change")
+        Button(action: {
+            self.onClickItem()
+        }, label: {
+            VStack {
+                Spacer(minLength: 20)
+                HStack(alignment: .top) {
+                    KFImage(URL(string: item.iconUrl))
+                        .placeholder({
+                            Color.secondary
+                        })
+                        .cacheOriginalImage()
+                        .fade(duration: 0.25)
+                        .cancelOnDisappear(true)
+                        .resizable()
+                        .clipShape(Capsule())
+                        .frame(width: 40, height: 40, alignment: .center)
+                        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                        .accessibility(identifier: "coinItem\(item.symbol)_image_icon")
+                    VStack(spacing: 5) {
+                        HStack {
+                            Text(item.name)
+                                .font(.bodyBold)
+                                .foregroundColor(.black)
+                                .accessibility(identifier: "coinItem\(item.symbol)_text_name")
+                                .lineLimit(1)
+                            Spacer(minLength: 8)
+                            Text("$\(String(format: "%.5f", item.price))")
+                                .font(.extraSmallBold)
+                                .foregroundColor(.black)
+                                .accessibility(identifier: "coinItem\(item.symbol)_text_price")
+                        }
+                        HStack {
+                            Text(item.symbol)
+                                .font(.smallBold)
+                                .foregroundColor(Color.init(hex: "#999999"))
+                                .accessibility(identifier: "coinItem\(item.symbol)_text_symbol")
+                            Spacer()
+                            ChangeView(number: item.change, isGreenColor: item.isChangePositive)
+                                .accessibility(identifier: "coinItem\(item.symbol)_text_change")
+                        }
                     }
                 }
+                Spacer(minLength: 20)
             }
-            Spacer(minLength: 20)
-        }
+        })
         .padding(5)
         .background(Color.init(hex: "#F9F9F9"))
         .cornerRadius(5)

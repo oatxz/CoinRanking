@@ -7,7 +7,6 @@
 
 import SwiftUI
 import Kingfisher
-import SVGKit
 
 public struct TopRankingItemView: View {
     let item: CoinItemModel
@@ -24,7 +23,6 @@ public struct TopRankingItemView: View {
                     .placeholder({
                         Color.secondary
                     })
-                    .setProcessor(SVGImgProcessor())
                     .cacheOriginalImage()
                     .fade(duration: 0.25)
                     .cancelOnDisappear(true)
@@ -40,7 +38,7 @@ public struct TopRankingItemView: View {
                     .accessibility(identifier: "topThree\(item.symbol)_text_symbol")
                 Text(item.name)
                     .font(.smallBold)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Color.init(hex: "#999999"))
                     .accessibility(identifier: "topThree\(item.symbol)_text_name")
                     .lineLimit(1)
                 ChangeView(number: item.change, isGreenColor: item.isChangePositive)

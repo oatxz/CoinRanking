@@ -11,7 +11,7 @@ import SwiftUI
 struct LMWN_CoinrankingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }

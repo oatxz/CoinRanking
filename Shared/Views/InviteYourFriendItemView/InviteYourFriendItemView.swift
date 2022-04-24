@@ -8,38 +8,35 @@
 import SwiftUI
 
 struct InviteYourFriendItemView: View {
-    @State var inviteCode: String
     @State var sheet: Bool = false
+    private var onClick: () -> ()
     
-    init(inviteCode: String) {
-        self.inviteCode = inviteCode
+    init(onClick: @escaping () -> ()) {
+        self.onClick = onClick
     }
     
     var body: some View {
-        Button(action: {}, label: {
+        Button(action: { self.onClick() }, label: {
             VStack {
                 Spacer(minLength: 20)
                 HStack(alignment: .center) {
-                    Image("Icon_InviteFriend")
-                        .resizable()
-                        .background(.white)
-                        .frame(width: 40, height: 40, alignment: .center)
-                        .clipShape(Capsule())
-                        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-                    HStack {
-                        Text("You can earn $10 when you invite a friend to buy crypto. ")
-                            .font(.bodyText)
-                            .foregroundColor(.black)
-                        Text("Invite your friend")
-                            .font(.bodyText)
-                            .foregroundColor(Color.init(hex: "#38A0FF"))
+                    VStack(alignment: .center) {
+                        Image("Icon_InviteFriend")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(10)
+                    }
+                    .background(.white)
+                    .frame(width: 40, height: 40, alignment: .center)
+                    .clipShape(Circle())
+                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+                    
+                    VStack(alignment: .leading) {
+                        Text("You can earn $10 when you invite a friend to buy crypto.").font(.bodyText).foregroundColor(.black) + Text(" Invite your friend").font(.bodyText).foregroundColor(Color.init(hex: "#38A0FF"))
                     }
                 }
                 Spacer(minLength: 20)
             }
-            .sheet(isPresented: $sheet, onDismiss: nil, content: {
-                ShareSheet(item: [self.inviteCode])
-            })
         })
         .padding(5)
         .background(Color.init(hex: "#C5E6FF"))

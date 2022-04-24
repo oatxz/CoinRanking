@@ -68,7 +68,7 @@ struct HomeView: View {
                         }
                         // Delay search 1 second
                         if !search.isFinish {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                                 search.isFinish = true
                             }
                         } else {
@@ -114,7 +114,7 @@ struct HomeView: View {
                         }
                         // Main
                         ScrollView(showsIndicators: false) {
-                            LazyVStack(alignment: .leading, spacing: 12) {
+                            LazyVStack(alignment: .center, spacing: 12) {
                                 // Top 3 Ranking
                                 if !search.active {
                                     HStack {
@@ -139,11 +139,14 @@ struct HomeView: View {
                                 }
                                 
                                 // Coins
-                                Text("Buy, sell and hold crypto")
-                                    .font(.custom(Fonts.Roboto.bold, size: 16))//.font(.bodyBold)
-                                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0))
-                                    .foregroundColor(.black)
-                                    .id(topID)
+                                HStack {
+                                    Text("Buy, sell and hold crypto")
+                                        .font(.custom(Fonts.Roboto.bold, size: 16))//.font(.bodyBold)
+                                        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0))
+                                        .foregroundColor(.black)
+                                        .id(topID)
+                                    Spacer()
+                                }
                                 ForEach(search.active ? (0..<viewModel.filterCoins.count) :      (3..<viewModel.filterCoins.count), id: \.self) { index in
                                     let coin = viewModel.filterCoins[index]
                                     if index != (viewModel.filterCoins.count - 1) {
@@ -163,16 +166,18 @@ struct HomeView: View {
                                             .ignoresSafeArea()
                                         })
                                     } else {
-                                        InviteYourFriendItemView(onClick: {
-                                            isShareSheet = true
-                                        })
-                                        .id(index)
-                                        .onAppear(perform: { self.lastIndex = index })
-                                        .sheet(isPresented: $isShareSheet,
-                                               onDismiss: { isShareSheet = false },
-                                               content: {
-                                            ShareSheet(item: ["X67VaMOA"])
-                                        })
+                                        if search.active {
+                                            InviteYourFriendItemView(onClick: {
+                                                isShareSheet = true
+                                            })
+                                            .id(index)
+                                            .onAppear(perform: { self.lastIndex = index })
+                                            .sheet(isPresented: $isShareSheet,
+                                                   onDismiss: { isShareSheet = false },
+                                                   content: {
+                                                ShareSheet(item: ["https://careers.lmwn.com when"])
+                                            })
+                                        }
                                     }
                                 }
                                 // Pull to next
@@ -281,7 +286,7 @@ struct HomeView: View {
     }
     
     private func setPullState(to: PulltoState) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
             // Reset
             resetPull()
             

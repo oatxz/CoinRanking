@@ -71,9 +71,7 @@ public extension Publisher where Output == Response, Failure == Error {
 }
 
 public struct Combine<Base> {
-    
     let base: Base
-    
     init(_ base: Base) {
         self.base = base
     }
@@ -90,21 +88,12 @@ public protocol CombineCompatible {
 
 extension CombineCompatible {
     public static var cb: Combine<Self>.Type {
-        get {
-            return Combine<Self>.self
-        }
-        set {
-            
-        }
+        get { return Combine<Self>.self }
+        set { }
     }
-    
     public var cb: Combine<Self> {
-        get {
-            return Combine(self)
-        }
-        set {
-            
-        }
+        get { return Combine(self) }
+        set { }
     }
 }
 

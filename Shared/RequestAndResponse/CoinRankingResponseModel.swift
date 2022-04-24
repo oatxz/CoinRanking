@@ -14,13 +14,13 @@ public struct CoinRankingResponseModel: Codable {
     let data: DataClass
     
     // MARK: - DataClass
-    struct DataClass: Codable {
+    public struct DataClass: Codable {
         let stats: Stats
         let coins: [Coin]
     }
 
     // MARK: - Coin
-    struct Coin: Codable {
+    public struct Coin: Codable {
         let uuid, symbol, name: String
         let color: String?
         let iconURL: String
@@ -44,30 +44,14 @@ public struct CoinRankingResponseModel: Codable {
     }
 
     // MARK: - Stats
-    struct Stats: Codable {
-        let total, referenceCurrencyRate, totalCoins, totalMarkets: Int
+    public struct Stats: Codable {
+        let total, totalCoins, totalMarkets: Int
         let totalExchanges: Int
         let totalMarketCap, total24HVolume: String
-        let btcDominance: Double
-        let bestCoins, newestCoins: [BestNewCoin]
 
         enum CodingKeys: String, CodingKey {
-            case total, referenceCurrencyRate, totalCoins, totalMarkets, totalExchanges, totalMarketCap
+            case total, totalCoins, totalMarkets, totalExchanges, totalMarketCap
             case total24HVolume = "total24hVolume"
-            case btcDominance, bestCoins, newestCoins
         }
-    }
-}
-
-
-// MARK: - BestNewCoin
-struct BestNewCoin: Codable {
-    let uuid, symbol, name, iconURL: String
-    let coinrankingURL: String
-
-    enum CodingKeys: String, CodingKey {
-        case uuid, symbol, name
-        case iconURL = "iconUrl"
-        case coinrankingURL = "coinrankingUrl"
     }
 }

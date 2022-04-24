@@ -7,14 +7,34 @@
 
 import SwiftUI
 
-struct LoadingView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+public struct LoadingView: View {
+    @Environment (\.colorScheme) var colorScheme: ColorScheme
+    @State private var isLoading = false
+    
+    let style = StrokeStyle(lineWidth: 6, lineCap: .round)
+    let size: Int?
+    
+    public init(size: Int) {
+        self.size = size
     }
-}
-
-struct LoadingView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoadingView()
+ 
+    public var body: some View {
+        ZStack {
+            Color(.white).opacity(0.5)
+ 
+            Circle()
+                .trim(from: 0, to: 1)
+                .stroke(
+                    AngularGradient(gradient: .init(colors: [Color.init(hex: "#38A0FF"), Color(.white)]),
+                                    center: .center),
+                    style: style
+                )
+                .frame(width: CGFloat(size ?? 40), height: CGFloat(size ?? 40))
+                .rotationEffect(Angle(degrees: isLoading ? 360 : 0))
+                .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false), value: isLoading)
+                .onAppear() {
+                    self.isLoading = true
+                }
+        }
     }
 }

@@ -8,13 +8,23 @@
 import SwiftUI
 
 struct ChangeView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    @State var isGreenColor: Bool
+    @State var number: Double
+    
+    init(number: Double, isGreenColor: Bool = true) {
+        self.number = number
+        self.isGreenColor = isGreenColor
     }
-}
-
-struct ChangeView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChangeView()
+    
+    var body: some View {
+        HStack(spacing: 3) {
+            Image(systemName: isGreenColor ? "arrow.up" : "arrow.down")
+                .resizable()
+                .foregroundColor(isGreenColor ? .green : .red)
+                .frame(width: 10, height: 10, alignment: .center)
+            Text("\(String(format: "%.2f", number))")
+                .font(.extraSmallBold)
+                .foregroundColor(isGreenColor ? .green : .red)
+        }
     }
 }

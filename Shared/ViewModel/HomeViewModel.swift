@@ -45,6 +45,7 @@ public class HomeViewModel: ObservableObject {
     func pullToNext() {
         /// when pull to last coin in Main
         self.limitCoinsList  *= 2
+        debugPrint("limitCoinsList: \(limitCoinsList)")
     }
     
     // MARK: - fetchCoinRanking
