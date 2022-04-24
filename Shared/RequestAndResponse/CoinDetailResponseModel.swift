@@ -19,23 +19,23 @@ public struct CoinDetailResponseModel: Codable {
 
     // MARK: - Coin
     struct Coin: Codable {
-        let uuid, symbol, name, coinDescription: String
-        let color: String
-        let iconURL: String
-        let websiteURL: String
-        let links: [Link]
-        let supply: Supply
-        let numberOfMarkets, numberOfExchanges: Int
-        let the24HVolume, marketCap, price, btcPrice: String
-        let priceAt: Int
-        let change: String
-        let rank: Int
-        let sparkline: [String]
-        let allTimeHigh: AllTimeHigh
-        let coinrankingURL: String
-        let tier: Int
-        let lowVolume: Bool
-        let listedAt: Int
+        let uuid, symbol, name, coinDescription: String?
+        let color: String?
+        let iconURL: String?
+        let websiteURL: String?
+        let links: [Link]?
+        let supply: Supply?
+        let numberOfMarkets, numberOfExchanges: Int?
+        let the24HVolume, marketCap, price, btcPrice: String?
+        let priceAt: Int?
+        let change: String?
+        let rank: Int?
+        let sparkline: [String]?
+        let allTimeHigh: AllTimeHigh?
+        let coinrankingURL: String?
+        let tier: Int?
+        let lowVolume: Bool?
+        let listedAt: Int?
 
         enum CodingKeys: String, CodingKey {
             case uuid, symbol, name
@@ -60,8 +60,7 @@ struct AllTimeHigh: Codable {
 
 // MARK: - Link
 struct Link: Codable {
-    let name, type: String
-    let url: String
+    let name, type, url: String
 }
 
 // MARK: - Supply

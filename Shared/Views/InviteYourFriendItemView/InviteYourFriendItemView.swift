@@ -32,14 +32,14 @@ struct InviteYourFriendItemView: View {
                     .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
                     
                     VStack(alignment: .leading) {
-                        Text("You can earn $10 when you invite a friend to buy crypto.").font(.bodyText).foregroundColor(.black) + Text(" Invite your friend").font(.bodyText).foregroundColor(Color.init(hex: "#38A0FF"))
+                        Text("You can earn $10 when you invite a friend to buy crypto.").font(.bodyText).foregroundColor(.black) + Text(" Invite your friend").font(.bodyText).foregroundColor(Color._BLUE)
                     }
                 }
                 Spacer(minLength: 20)
             }
         })
         .padding(5)
-        .background(Color.init(hex: "#C5E6FF"))
+        .background(Color._LIGHT_BLUE)
         .cornerRadius(5)
         .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 2)
         .frame(maxHeight: 360, alignment: .center)

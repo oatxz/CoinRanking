@@ -25,7 +25,7 @@ public struct LoadingView: View {
             Circle()
                 .trim(from: 0, to: 1)
                 .stroke(
-                    AngularGradient(gradient: .init(colors: [Color.init(hex: "#38A0FF"), Color(.white)]),
+                    AngularGradient(gradient: .init(colors: [Color._BLUE, Color._WHITE]),
                                     center: .center),
                     style: style
                 )

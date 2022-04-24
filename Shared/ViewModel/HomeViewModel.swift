@@ -19,7 +19,6 @@ public class HomeViewModel: ObservableObject {
     @Published var detailState: LoadShelfState = .idle
     @Published var useCase: CoinRankingUseCase
     public var limitCoinsList: Int
-    public let inviteCode: String = "X67VaMOA" // random code
     
     init(useCase: CoinRankingUseCase) {
         self.useCase = useCase
@@ -28,6 +27,7 @@ public class HomeViewModel: ObservableObject {
     
     // MARK: - loadShelf
     func loadShelf() {
+        debugPrint("load Shelf ..")
         self.state = .loading
         fetchCoinRanking(limit: limitCoinsList, completion: { [weak self] result in
             guard let self = self else { return }
@@ -110,12 +110,19 @@ public class HomeViewModel: ObservableObject {
     // MARK: - loadCoinDetail
     func loadCoinDetail(uuid: String) {
         self.detailState = .loading
+        debugPrint("load Coin Detail by \(uuid) ..")
+        guard !uuid.isEmpty else {
+            debugPrint("UUID is empty.")
+            self.detailState = .fail
+            return
+        }
         self.fetchCoinDetail(uuid: uuid, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .failure(_):
                 self.detailState = .fail
-            case .success(_):
+            case .success(let data):
+                self.detailCoin = data
                 self.detailState = .success
             }
         })
@@ -134,16 +141,15 @@ public class HomeViewModel: ObservableObject {
                 }
             }, receiveValue: { value in
                 let coin = value.data.coin
-                let detail = CoinDetailModel(uuid:    coin.uuid,
-                                           iconUrl:      coin.iconURL,
-                                           name:         coin.name,
-                                           nameColor:    coin.color,
-                                           symbol:       coin.symbol,
-                                           price:        Double(coin.price) ?? 0.0,
-                                           marketCap:    Int(coin.marketCap) ?? 0,
-                                           description:  coin.coinDescription,
-                                           websiteUrl:   coin.websiteURL)
-                self.detailCoin = detail
+                let detail = CoinDetailModel(uuid:    coin.uuid ?? "",
+                                           iconUrl:      coin.iconURL ?? "",
+                                           name:         coin.name ?? "",
+                                           nameColor:    coin.color ?? "#000",
+                                           symbol:       coin.symbol ?? "",
+                                           price:        Double(coin.price ?? "") ?? 0.0,
+                                           marketCap:    Int(coin.marketCap ?? "") ?? 0,
+                                           description:  coin.coinDescription ?? "",
+                                           websiteUrl:   coin.websiteURL ?? "")
                 completion(.success(detail))
             })
             .store(in: &self.anyCancellable)

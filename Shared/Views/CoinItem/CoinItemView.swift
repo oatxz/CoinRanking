@@ -52,7 +52,7 @@ struct CoinItemView: View {
                         HStack {
                             Text(item.symbol)
                                 .font(.smallBold)
-                                .foregroundColor(Color.init(hex: "#999999"))
+                                .foregroundColor(._GRAY)
                                 .accessibility(identifier: "coinItem\(item.symbol)_text_symbol")
                             Spacer()
                             ChangeView(number: item.change, isGreenColor: item.isChangePositive)
@@ -64,7 +64,7 @@ struct CoinItemView: View {
             }
         })
         .padding(5)
-        .background(Color.init(hex: "#F9F9F9"))
+        .background(Color._WHITE)
         .cornerRadius(5)
         .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 2)
         .frame(maxHeight: 360, alignment: .center)

@@ -18,6 +18,9 @@ struct HomeView: View {
     @Namespace private var bottomID
     @State var lastIndex: Int = 0
     @State var isPullSuccess: Bool = true
+    @State var selectCoin: String = ""
+    @State var isFirstOpen: Bool = false
+    private let BUY_SELL_TEXT = "Buy, sell and hold crypto"
     
     init(viewModel: HomeViewModel = HomeViewModel(useCase: CoinRankingUseCaseImpl())) {
         self.viewModel = viewModel
@@ -29,7 +32,7 @@ struct HomeView: View {
             Color.white.onAppear(perform: viewModel.loadShelf)
         case .loading:
             VStack(alignment: .leading, spacing: 20){
-                Text("Buy, sell and hold crypto")
+                Text(BUY_SELL_TEXT)
                     .font(.bodyBold)
                     .foregroundColor(.black)
                 HStack(alignment: .center) {
@@ -53,29 +56,32 @@ struct HomeView: View {
                             .foregroundColor(.black)
                     }
                     .padding()
-                    .background(Color.init(hex: "#EEEEEE"))
+                    .background(Color._LIGHT_GRAY)
                     .cornerRadius(8)
                     .padding(.horizontal, 8)
                     .onAppear(perform: {
                         resetPull()
                     })
                     .onTapGesture {
-                        search.active = true
+                        withAnimation(Animation.spring()) {
+                            search.active = true
+                        }
                     }
                     .onChange(of: search.text, perform: { text in
                         withAnimation() {
                             scroll.scrollTo(0, anchor: .top)
-                        }
-                        // Delay search 1 second
-                        if !search.isFinish {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                search.isFinish = true
+                            
+                            // Delay search 1 second
+                            if !search.isFinish {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                    search.isFinish = true
+                                }
+                            } else {
+                                search.isFinish = false
+                                viewModel.fetchSearchCoins(keyword: text, limit: 20, completion: { _ in
+                                    // do something
+                                })
                             }
-                        } else {
-                            search.isFinish = false
-                            viewModel.fetchSearchCoins(keyword: text, limit: 20, completion: { _ in
-                                // do something
-                            })
                         }
                     })
                     .overlay(
@@ -84,9 +90,11 @@ struct HomeView: View {
                             Spacer()
                             if search.active {
                                 Button(action: {
-                                    search.text = ""
+                                    withAnimation(Animation.linear) {
+                                        search.text = ""
+                                        search.active = false
+                                    }
                                     viewModel.filterCoins = viewModel.coins
-                                    search.active = false
                                 }, label: {
                                     Image(systemName: "xmark.circle.fill")
                                         .padding(.vertical)
@@ -94,7 +102,7 @@ struct HomeView: View {
                             }
                         }
                         .padding(.horizontal, 24)
-                        .foregroundColor(Color.init(hex: "#C4C4C4"))
+                        .foregroundColor(Color._MEDUIM_GRAY)
                     )
                     Divider()
                     
@@ -112,36 +120,39 @@ struct HomeView: View {
                             .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 2)
                             .transition(.opacity)
                         }
+                        
                         // Main
                         ScrollView(showsIndicators: false) {
                             LazyVStack(alignment: .center, spacing: 12) {
                                 // Top 3 Ranking
                                 if !search.active {
-                                    HStack {
-                                        Text("Top")
-                                            .font(.bodyBold)
-                                            .foregroundColor(.black)
-                                        Text("3")
-                                            .font(.bodyBold)
-                                            .foregroundColor(.red)
-                                        Text("rank crypto")
-                                            .font(.bodyText)
-                                            .foregroundColor(.black)
-                                        Spacer()
+                                    VStack(spacing: 12) {
+                                        HStack {
+                                            Text("Top")
+                                                .font(.bodyBold)
+                                                .foregroundColor(.black)
+                                            Text("3")
+                                                .font(.bodyBold)
+                                                .foregroundColor(.red)
+                                            Text("rank crypto")
+                                                .font(.bodyText)
+                                                .foregroundColor(.black)
+                                            Spacer()
+                                        }
+                                        HStack(spacing: 8) {
+                                            TopRankingItemView(item: viewModel.coins[0])
+                                            TopRankingItemView(item: viewModel.coins[1])
+                                            TopRankingItemView(item: viewModel.coins[2])
+                                        }
                                     }
-                                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 12, trailing: 0))
-                                    HStack(spacing: 8) {
-                                        TopRankingItemView(item: viewModel.coins[0])
-                                        TopRankingItemView(item: viewModel.coins[1])
-                                        TopRankingItemView(item: viewModel.coins[2])
-                                    }
+                                    .transition(.move(edge: .top))
                                     .padding(EdgeInsets(top: 0, leading: 8, bottom: 20, trailing: 8))
                                 }
                                 
                                 // Coins
                                 HStack {
-                                    Text("Buy, sell and hold crypto")
-                                        .font(.custom(Fonts.Roboto.bold, size: 16))//.font(.bodyBold)
+                                    Text(BUY_SELL_TEXT)
+                                        .font(.bodyBold)
                                         .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0))
                                         .foregroundColor(.black)
                                         .id(topID)
@@ -149,37 +160,44 @@ struct HomeView: View {
                                 }
                                 ForEach(search.active ? (0..<viewModel.filterCoins.count) :      (3..<viewModel.filterCoins.count), id: \.self) { index in
                                     let coin = viewModel.filterCoins[index]
-                                    if index != (viewModel.filterCoins.count - 1) {
-                                        CoinItemView(item: coin, onClickItem: {
-                                            viewModel.loadCoinDetail(uuid: coin.uuid)
-                                            isShowDetail = true
+                                    
+                                    // Coin List
+                                    CoinItemView(item: coin, onClickItem: {
+                                        selectCoin = coin.uuid
+                                        isShowDetail = true
+                                    })
+                                    .id(index)
+                                    .sheet(isPresented: $isShowDetail,
+                                           onDismiss: nil,
+                                           content: {
+                                        CoinDetailView(uuid: $selectCoin, viewModel: self.viewModel, onClose: {
+                                            withAnimation() {
+                                                selectCoin = ""
+                                                isShowDetail = false
+                                            }
                                         })
-                                        .id(index)
-                                        .sheet(isPresented: $isShowDetail,
-                                               onDismiss: { isShowDetail = false },
-                                               content: {
-                                            CoinDetailView(uuid: coin.uuid, viewModel: self.viewModel, onClose: {
-                                                // do somthing
-                                            }, onClickOpenWebsite: {
-                                                // do somthing
-                                            })
-                                            .ignoresSafeArea()
+                                        .onAppear(perform: {
+                                            debugPrint("CoinDetailView onAppear by \(selectCoin) ..")
                                         })
-                                    } else {
-                                        if search.active {
-                                            InviteYourFriendItemView(onClick: {
-                                                isShareSheet = true
-                                            })
-                                            .id(index)
-                                            .onAppear(perform: { self.lastIndex = index })
-                                            .sheet(isPresented: $isShareSheet,
-                                                   onDismiss: { isShareSheet = false },
-                                                   content: {
-                                                ShareSheet(item: ["https://careers.lmwn.com when"])
-                                            })
-                                        }
-                                    }
+                                        .onDisappear(perform: {
+                                            self.viewModel.detailState = .idle
+                                        })
+                                        .ignoresSafeArea()
+                                    })
                                 }
+                                
+                                // Invite Friend ..
+                                if search.active {
+                                    InviteYourFriendItemView(onClick: {
+                                            isShareSheet = true
+                                        })
+                                        .sheet(isPresented: $isShareSheet,
+                                               onDismiss: { isShareSheet = false },
+                                               content: {
+                                            ShareSheet(item: ["https://careers.lmwn.com when"])
+                                        })
+                                }
+                                
                                 // Pull to next
                                 ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
                                     if isPullSuccess {
@@ -190,14 +208,18 @@ struct HomeView: View {
                                     }
                                 }
                                 .onAppear(perform: {
-                                    debugPrint("Pull to Refresh - onAppear")
-                                    scroll.scrollTo(bottomID, anchor: .bottom)
-                                    setPullState(to: .next)
+                                    if isFirstOpen {
+                                        debugPrint("Pull to Refresh - onAppear")
+                                        scroll.scrollTo(bottomID, anchor: .bottom)
+                                        setPullState(to: .next)
+                                    }
                                 })
                                 .transition(.opacity)
+                                .padding(.vertical, 16)
                             }
                             .padding(8)
                             .overlay(
+                                // Detect Scrolling point ..
                                 GeometryReader { proxy in
                                     let offset = proxy.frame(in: .named("scroll")).minY
                                     Color.clear.preference(key: ViewOffsetKey.self, value: offset)
@@ -214,7 +236,7 @@ struct HomeView: View {
                                 }
                                 // Drag is started ..
                                 pullRefresh.offset = value
-                                if (pullRefresh.offset - pullRefresh.startOffset) > 60,
+                                if (pullRefresh.offset - pullRefresh.startOffset) > 80,
                                    !pullRefresh.isStarted {
                                     pullRefresh.isStarted = true
                                     debugPrint("pullRefresh.isStarted = true")
@@ -239,22 +261,29 @@ struct HomeView: View {
                             VStack(alignment: .center) {
                                 Spacer()
                                 Text("Sorry")
-                                    .font(.custom(Fonts.Roboto.bold, size: 20))
+                                    .font(.custom(Style.bold.rawValue, size: 20))
                                     .foregroundColor(.black)
                                 Text("No result match this keyword")
                                     .font(.bodyText)
-                                    .foregroundColor(Color.init(hex: "#999999"))
+                                    .foregroundColor(._GRAY)
                                 Spacer()
                             }
                             Spacer()
                         }
                     }
+                    
+                    // fix: Don't scroll PULL TO NEXT when open page first time
+                    Color.clear
+                        .frame(width: 0, height: 0, alignment: .bottom)
+                        .onAppear {
+                            isFirstOpen = true
+                        }
                 }
                 .background(.white)
             } else {
                 VStack(alignment: .center, spacing: 5) {
                     HStack(alignment: .top) {
-                        Text("Buy, sell and hold crypto")
+                        Text(BUY_SELL_TEXT)
                             .font(.bodyBold)
                             .padding(EdgeInsets(top: 20, leading: 8, bottom: 0, trailing: 0))
                             .foregroundColor(.black)
@@ -270,7 +299,7 @@ struct HomeView: View {
         case .fail:
             VStack(alignment: .center, spacing: 20){
                 HStack(alignment: .top) {
-                    Text("Buy, sell and hold crypto")
+                    Text(BUY_SELL_TEXT)
                         .font(.bodyBold)
                         .foregroundColor(.black)
                     Spacer()
@@ -286,6 +315,7 @@ struct HomeView: View {
     }
     
     private func setPullState(to: PulltoState) {
+        debugPrint("Start Pull..")
         DispatchQueue.main.asyncAfter(deadline: .now() + 4, execute: {
             // Reset
             resetPull()
@@ -295,9 +325,11 @@ struct HomeView: View {
                 // Pull to Next
                 viewModel.pullToNext()
                 fetchCoinRanking()
+                debugPrint(".. to Next")
             case .refresh:
                 // Pull to Refresh
                 fetchCoinRanking()
+                debugPrint(".. to Refresh")
             }
         })
     }

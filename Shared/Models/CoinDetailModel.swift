@@ -22,7 +22,7 @@ struct CoinDetailModel: Identifiable {
     init(uuid: String, iconUrl: String, name: String, nameColor: String, symbol: String, price: Double, marketCap: Int, description: String, websiteUrl: String) {
         self.id = uuid
         self.uuid = uuid
-        self.iconUrl = iconUrl
+        self.iconUrl = iconUrl.replacingOccurrences(of: ".svg", with: ".png")
         self.name = name
         self.nameColor = nameColor
         self.symbol = symbol

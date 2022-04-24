@@ -9,6 +9,13 @@ import SwiftUI
 import UIKit
 
 extension Color {
+    static let _GRAY    = Color.init(hex: "#999999")
+    static let _WHITE   = Color.init(hex: "#F9F9F9")
+    static let _BLUE    = Color.init(hex: "#38A0FF")
+    static let _LIGHT_BLUE  = Color.init(hex: "#C5E6FF")
+    static let _LIGHT_GRAY  = Color.init(hex: "#EEEEEE")
+    static let _MEDUIM_GRAY = Color.init(hex: "#C4C4C4")
+    
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0

@@ -18,13 +18,13 @@ public struct ErrorView: View {
             Text("Could not load data")
                 .font(.bodyText)
                 .padding(.top, 33)
-                .foregroundColor(Color.init(hex: "#333333"))
+                .foregroundColor(.black)
             Button(action: {
                 self.onClickTryAgain()
             }, label: {
                 Text("Try again")
                     .font(.smallBold)
-                    .foregroundColor(Color.init(hex: "#38A0FF"))
+                    .foregroundColor(._BLUE)
             })
         }
     }

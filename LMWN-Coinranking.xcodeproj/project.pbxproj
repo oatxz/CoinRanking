@@ -10,10 +10,6 @@
 		538E4B1B68372B905A5CA4C6 /* Pods_LMWN_Coinranking__macOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD9857A9EAF5472591358DDF /* Pods_LMWN_Coinranking__macOS_.framework */; };
 		5834D8A52803892700F02026 /* ViewOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5834D8A42803892700F02026 /* ViewOffsetKey.swift */; };
 		583ED40928014E42006F9822 /* CoinDetailResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583ED40828014E42006F9822 /* CoinDetailResponseModel.swift */; };
-		583ED421280152BF006F9822 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 583ED40E280152BF006F9822 /* Roboto-Light.ttf */; };
-		583ED424280152BF006F9822 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 583ED411280152BF006F9822 /* Roboto-Regular.ttf */; };
-		583ED430280152BF006F9822 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 583ED41D280152BF006F9822 /* Roboto-Bold.ttf */; };
-		583ED431280152BF006F9822 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 583ED41E280152BF006F9822 /* Roboto-Thin.ttf */; };
 		583ED43628015364006F9822 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583ED43528015364006F9822 /* FontManager.swift */; };
 		583ED439280162E6006F9822 /* CoinItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583ED438280162E6006F9822 /* CoinItemModel.swift */; };
 		583ED43C2801687A006F9822 /* CoinRankingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583ED43B2801687A006F9822 /* CoinRankingAPI.swift */; };
@@ -37,6 +33,11 @@
 		584845E928004C430039FE2E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584845E828004C430039FE2E /* HomeViewModel.swift */; };
 		584845ED28004D310039FE2E /* CoinItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584845EC28004D310039FE2E /* CoinItemView.swift */; };
 		584845F02800503F0039FE2E /* CoinRankingResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584845EF2800503F0039FE2E /* CoinRankingResponseModel.swift */; };
+		58C3A1B1281545C6005D3D2C /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58C3A1AC281545C6005D3D2C /* Roboto-Light.ttf */; };
+		58C3A1B2281545C6005D3D2C /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58C3A1AD281545C6005D3D2C /* Roboto-Regular.ttf */; };
+		58C3A1B3281545C6005D3D2C /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58C3A1AE281545C6005D3D2C /* Roboto-Bold.ttf */; };
+		58C3A1B4281545C6005D3D2C /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58C3A1AF281545C6005D3D2C /* Roboto-Thin.ttf */; };
+		58C3A1B5281545C6005D3D2C /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 58C3A1B0281545C6005D3D2C /* LICENSE.txt */; };
 		58C4C8C92802A51500BAB35F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4C8C82802A51500BAB35F /* LoadingView.swift */; };
 		58C4C8CE2802DE5F00BAB35F /* InviteYourFriendItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4C8CD2802DE5F00BAB35F /* InviteYourFriendItemView.swift */; };
 		58C4C8D02802F28800BAB35F /* CoinDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58C4C8CF2802F28800BAB35F /* CoinDetailView.swift */; };
@@ -68,10 +69,6 @@
 		4EA5E2F1CE92C36888A47A95 /* Pods-LMWN-Coinranking (macOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LMWN-Coinranking (macOS).debug.xcconfig"; path = "Target Support Files/Pods-LMWN-Coinranking (macOS)/Pods-LMWN-Coinranking (macOS).debug.xcconfig"; sourceTree = "<group>"; };
 		5834D8A42803892700F02026 /* ViewOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOffsetKey.swift; sourceTree = "<group>"; };
 		583ED40828014E42006F9822 /* CoinDetailResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailResponseModel.swift; sourceTree = "<group>"; };
-		583ED40E280152BF006F9822 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
-		583ED411280152BF006F9822 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
-		583ED41D280152BF006F9822 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
-		583ED41E280152BF006F9822 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		583ED43528015364006F9822 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		583ED438280162E6006F9822 /* CoinItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinItemModel.swift; sourceTree = "<group>"; };
 		583ED43B2801687A006F9822 /* CoinRankingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRankingAPI.swift; sourceTree = "<group>"; };
@@ -98,6 +95,12 @@
 		584845E828004C430039FE2E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		584845EC28004D310039FE2E /* CoinItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinItemView.swift; sourceTree = "<group>"; };
 		584845EF2800503F0039FE2E /* CoinRankingResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRankingResponseModel.swift; sourceTree = "<group>"; };
+		58C3A1AC281545C6005D3D2C /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		58C3A1AD281545C6005D3D2C /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		58C3A1AE281545C6005D3D2C /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		58C3A1AF281545C6005D3D2C /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		58C3A1B0281545C6005D3D2C /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		58C3A1B6281549D4005D3D2C /* LMWN-Coinranking--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "LMWN-Coinranking--iOS--Info.plist"; sourceTree = "<group>"; };
 		58C4C8C82802A51500BAB35F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		58C4C8CD2802DE5F00BAB35F /* InviteYourFriendItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteYourFriendItemView.swift; sourceTree = "<group>"; };
 		58C4C8CF2802F28800BAB35F /* CoinDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailView.swift; sourceTree = "<group>"; };
@@ -155,10 +158,11 @@
 		583ED40B2801528D006F9822 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				583ED41D280152BF006F9822 /* Roboto-Bold.ttf */,
-				583ED40E280152BF006F9822 /* Roboto-Light.ttf */,
-				583ED411280152BF006F9822 /* Roboto-Regular.ttf */,
-				583ED41E280152BF006F9822 /* Roboto-Thin.ttf */,
+				58C3A1B0281545C6005D3D2C /* LICENSE.txt */,
+				58C3A1AE281545C6005D3D2C /* Roboto-Bold.ttf */,
+				58C3A1AC281545C6005D3D2C /* Roboto-Light.ttf */,
+				58C3A1AD281545C6005D3D2C /* Roboto-Regular.ttf */,
+				58C3A1AF281545C6005D3D2C /* Roboto-Thin.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -207,6 +211,7 @@
 		584845A028004A440039FE2E = {
 			isa = PBXGroup;
 			children = (
+				58C3A1B6281549D4005D3D2C /* LMWN-Coinranking--iOS--Info.plist */,
 				6DBEC0AE16680056242D9845 /* Frameworks */,
 				584845B428004A470039FE2E /* macOS */,
 				5D3D59139C71AA57E419EF48 /* Pods */,
@@ -220,9 +225,9 @@
 		584845A528004A450039FE2E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				584845A628004A450039FE2E /* LMWN_CoinrankingApp.swift */,
 				584845A828004A470039FE2E /* Assets.xcassets */,
 				583ED4512801CCEB006F9822 /* Components */,
-				584845A628004A450039FE2E /* LMWN_CoinrankingApp.swift */,
 				584845EE2800502E0039FE2E /* Models */,
 				583ED43A28016865006F9822 /* Providers */,
 				584845F1280052940039FE2E /* Repositories */,
@@ -230,8 +235,8 @@
 				583ED40A28015236006F9822 /* Resources */,
 				584845F22800529D0039FE2E /* UseCases */,
 				583ED43328015340006F9822 /* Utility */,
-				584845E228004A7B0039FE2E /* Views */,
 				584845E728004C2F0039FE2E /* ViewModel */,
+				584845E228004A7B0039FE2E /* Views */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -506,11 +511,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				583ED424280152BF006F9822 /* Roboto-Regular.ttf in Resources */,
+				58C3A1B5281545C6005D3D2C /* LICENSE.txt in Resources */,
+				58C3A1B2281545C6005D3D2C /* Roboto-Regular.ttf in Resources */,
+				58C3A1B1281545C6005D3D2C /* Roboto-Light.ttf in Resources */,
+				58C3A1B3281545C6005D3D2C /* Roboto-Bold.ttf in Resources */,
+				58C3A1B4281545C6005D3D2C /* Roboto-Thin.ttf in Resources */,
 				584845D228004A470039FE2E /* Assets.xcassets in Resources */,
-				583ED421280152BF006F9822 /* Roboto-Light.ttf in Resources */,
-				583ED431280152BF006F9822 /* Roboto-Thin.ttf in Resources */,
-				583ED430280152BF006F9822 /* Roboto-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,6 +804,7 @@
 				DEVELOPMENT_TEAM = 8VJJ4GN37N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "LMWN-Coinranking--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -829,6 +836,7 @@
 				DEVELOPMENT_TEAM = 8VJJ4GN37N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "LMWN-Coinranking--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

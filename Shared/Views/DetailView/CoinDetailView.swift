@@ -16,67 +16,61 @@ enum MarketCapUnit {
 
 struct CoinDetailView: View {
     
-    @State var uuid: String
+    @Binding var uuid: String
     @ObservedObject var viewModel: HomeViewModel
     private var onClose: () -> ()
-    private var onClickOpenWebsite: () -> ()
     
-    init(uuid: String, viewModel: HomeViewModel, onClose: @escaping () -> (), onClickOpenWebsite: @escaping () -> ()) {
-        self.uuid = uuid
+    init(uuid: Binding<String>, viewModel: HomeViewModel, onClose: @escaping () -> ()) {
+        self._uuid = uuid
         self.viewModel = viewModel
         self.onClose = onClose
-        self.onClickOpenWebsite = onClickOpenWebsite
     }
     
     var body: some View {
         switch viewModel.detailState {
         case .idle:
-            Color.clear
+            Color.clear.onAppear(perform: {
+                viewModel.loadCoinDetail(uuid: self.uuid)
+            })
         case .loading:
             VStack(alignment: .center) {
                 LoadingView(size: 40)
                 Spacer()
             }
         case .fail:
-            VStack(alignment: .center) {
-                ErrorView(onClickTryAgain: {
-                    viewModel.fetchCoinDetail(uuid: self.uuid, completion: { result in
-                        switch result {
-                        case .failure(_):
-                            self.viewModel.detailState = .fail
-                        case .success(let data):
-                            self.viewModel.detailCoin = data
-                            self.viewModel.detailState = .success
-                        }
+            ZStack(alignment: .top) {
+                VStack(alignment: .center) {
+                    ErrorView(onClickTryAgain: {
+                        viewModel.loadCoinDetail(uuid: self.uuid)
                     })
-                })
-                Spacer()
+                    Spacer()
+                }
+                
+                HStack {
+                    Spacer()
+                    Button(action: { self.onClose() }, label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .foregroundColor(.black)
+                            .frame(width: 20, height: 20, alignment: .center)
+                    })
+                }
+                .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 20))
             }
         case .success:
-            if viewModel.detailCoin != nil {
+            if viewModel.detailCoin != nil,
+               viewModel.detailCoin?.uuid == self.uuid {
                 let item = viewModel.detailCoin
-                ZStack(alignment: .bottom) {
+                ZStack(alignment: .top) {
                     // out of view
                     Color.black
-                        .opacity(0.3)
+                        .opacity(0.7)
                         .onTapGesture {
                             self.onClose()
                         }
-
+                    
+                    // content
                     VStack {
-                        
-                        // close button
-//                        HStack {
-//                            Spacer()
-//                            Button(action: { self.onClose() }, label: {
-//                                Image(systemName: "xmark")
-//                                    .resizable()
-//                                    .frame(width: 20, height: 20, alignment: .center)
-//                            })
-//                        }
-//                        .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 20))
-                        
-                        // content
                         VStack(alignment: .leading, spacing: 16) {
                             // header
                             HStack(alignment: .top, spacing: 16) {
@@ -146,12 +140,11 @@ struct CoinDetailView: View {
                             HStack {
                                 Spacer()
                                 Button(action: {
-                                    self.onClickOpenWebsite()
                                     openWebsite(url: item?.websiteUrl ?? "")
                                 }, label: {
                                     Text("GO TO WEBSITE")
                                         .font(.smallBold)
-                                        .foregroundColor(Color.init(hex: "#38A0FF"))
+                                        .foregroundColor(Color._BLUE)
                                 })
                                 Spacer()
                             }
@@ -161,6 +154,18 @@ struct CoinDetailView: View {
                     }
                     .background(.white)
                     .cornerRadius(12, corners: [.topLeft, .topRight])
+                    
+                    // close button
+                    HStack {
+                        Spacer()
+                        Button(action: { self.onClose() }, label: {
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .foregroundColor(.black)
+                                .frame(width: 20, height: 20, alignment: .center)
+                        })
+                    }
+                    .padding(EdgeInsets(top: 20, leading: 0, bottom: 0, trailing: 20))
                 }
             }
         }
@@ -168,7 +173,6 @@ struct CoinDetailView: View {
     
     func openWebsite(url: String) {
         guard let url = URL(string: url) else { return }
-        //guard let url = URL(string: url) else { return }
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }

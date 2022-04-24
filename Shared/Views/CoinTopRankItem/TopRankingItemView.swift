@@ -38,7 +38,7 @@ public struct TopRankingItemView: View {
                     .accessibility(identifier: "topThree\(item.symbol)_text_symbol")
                 Text(item.name)
                     .font(.smallBold)
-                    .foregroundColor(Color.init(hex: "#999999"))
+                    .foregroundColor(._GRAY)
                     .accessibility(identifier: "topThree\(item.symbol)_text_name")
                     .lineLimit(1)
                 ChangeView(number: item.change, isGreenColor: item.isChangePositive)
@@ -48,7 +48,7 @@ public struct TopRankingItemView: View {
             Spacer()
         }
         .padding(5)
-        .background(Color.init(hex: "#F9F9F9"))
+        .background(Color._WHITE)
         .cornerRadius(8)
         .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 2)
         .frame(minWidth: width, maxWidth: width, minHeight: 140, maxHeight: 140, alignment: .center)
