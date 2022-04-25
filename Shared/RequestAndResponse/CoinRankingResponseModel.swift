@@ -55,3 +55,12 @@ public struct CoinRankingResponseModel: Codable {
         }
     }
 }
+
+// MARK: - CoinRankingResponseModel
+public struct CoinRankingErrorResponseModel: Codable {
+    let status, type, message: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case status, type, message
+    }
+}
