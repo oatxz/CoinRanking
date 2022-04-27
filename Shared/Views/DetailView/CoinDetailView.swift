@@ -128,29 +128,31 @@ struct CoinDetailView: View {
                             }
 
                             // description
-                            HTMLTextView(htmlContent: item?.description ?? "")
+                            HTMLTextView(htmlContent: item?.description ?? "No description")
 
                         }
                         .padding(EdgeInsets(top: 32, leading: 24, bottom: 0, trailing: 4))
 
                         // Go to website
-                        VStack(alignment: .center) {
-                            Divider()
-                            Spacer()
-                            HStack {
+                        if (item?.websiteUrl ?? "") == "" {
+                            VStack(alignment: .center) {
+                                Divider()
                                 Spacer()
-                                Button(action: {
-                                    openWebsite(url: item?.websiteUrl ?? "")
-                                }, label: {
-                                    Text("GO TO WEBSITE")
-                                        .font(.smallBold)
-                                        .foregroundColor(Color._BLUE)
-                                })
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        openWebsite(url: item?.websiteUrl ?? "")
+                                    }, label: {
+                                        Text("GO TO WEBSITE")
+                                            .font(.smallBold)
+                                            .foregroundColor(Color._BLUE)
+                                    })
+                                    Spacer()
+                                }
                                 Spacer()
                             }
-                            Spacer()
+                            .frame(minHeight: 50, maxHeight: 50)
                         }
-                        .frame(minHeight: 50, maxHeight: 50)
                     }
                     .background(.white)
                     .cornerRadius(12, corners: [.topLeft, .topRight])

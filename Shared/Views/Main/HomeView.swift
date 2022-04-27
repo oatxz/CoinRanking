@@ -19,7 +19,6 @@ struct HomeView: View {
     @State var lastIndex: Int = 0
     @State var isPullSuccess: Bool = true
     @State var selectCoin: String = ""
-    @State var isFirstOpen: Bool = false
     private let BUY_SELL_TEXT = "Buy, sell and hold crypto"
     
     init(viewModel: HomeViewModel = HomeViewModel(useCase: CoinRankingUseCaseImpl())) {
@@ -70,18 +69,7 @@ struct HomeView: View {
                     .onChange(of: search.text, perform: { text in
                         withAnimation() {
                             scroll.scrollTo(0, anchor: .top)
-                            
-                            // Delay search 1 second
-                            if !search.isFinish {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                    search.isFinish = true
-                                }
-                            } else {
-                                search.isFinish = false
-                                viewModel.fetchSearchCoins(keyword: text, limit: 20, completion: { _ in
-                                    // do something
-                                })
-                            }
+                            viewModel.fetchSearchCoins(keyword: text, limit: self.viewModel.limitCoinsList, completion: { _ in  /* code */ })
                         }
                     })
                     .overlay(
@@ -208,10 +196,14 @@ struct HomeView: View {
                                     }
                                 }
                                 .onAppear(perform: {
-                                    if isFirstOpen {
-                                        debugPrint("Pull to Refresh - onAppear")
-                                        scroll.scrollTo(bottomID, anchor: .bottom)
+                                    debugPrint("Pull to Refresh - onAppear")
+                                    scroll.scrollTo(bottomID, anchor: .bottom)
+                                    if !search.active {
                                         setPullState(to: .next)
+                                    } else {
+                                        // maximum list to 100
+                                        self.viewModel.searchPullToNext()
+                                        self.viewModel.fetchSearchCoins(keyword: search.text, limit: self.viewModel.limitSearchCoinsList, completion: { _ in })
                                     }
                                 })
                                 .transition(.opacity)
@@ -271,13 +263,6 @@ struct HomeView: View {
                             Spacer()
                         }
                     }
-                    
-                    // fix: Don't scroll PULL TO NEXT when open page first time
-                    Color.clear
-                        .frame(width: 0, height: 0, alignment: .bottom)
-                        .onAppear {
-                            isFirstOpen = true
-                        }
                 }
                 .background(.white)
             } else {

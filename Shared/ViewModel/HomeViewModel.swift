@@ -18,11 +18,11 @@ public class HomeViewModel: ObservableObject {
     @Published var state: LoadShelfState = .idle
     @Published var detailState: LoadShelfState = .idle
     @Published var useCase: CoinRankingUseCase
-    public var limitCoinsList: Int
+    @Published var limitCoinsList: Int = 10
+    @Published var limitSearchCoinsList: Int = 10
     
     init(useCase: CoinRankingUseCase) {
         self.useCase = useCase
-        self.limitCoinsList = 10
     }
     
     // MARK: - loadShelf
@@ -45,6 +45,22 @@ public class HomeViewModel: ObservableObject {
     func pullToNext() {
         /// when pull to last coin in Main
         self.limitCoinsList  *= 2
+        /// if list > 100 :: response will ERROR
+        if self.limitCoinsList > 100 {
+            self.limitCoinsList = 100
+            debugPrint("force set limitCoinsList to 100 ..")
+        }
+        debugPrint("limitCoinsList: \(limitCoinsList)")
+    }
+    
+    func searchPullToNext() {
+        /// when pull to last coin in Main
+        self.limitSearchCoinsList  *= 2
+        /// if list > 100 :: response will ERROR
+        if self.limitSearchCoinsList > 100 {
+            self.limitSearchCoinsList = 100
+            debugPrint("force set limitSearchCoinsList to 100 ..")
+        }
         debugPrint("limitCoinsList: \(limitCoinsList)")
     }
     
@@ -70,6 +86,7 @@ public class HomeViewModel: ObservableObject {
     // MARK: - fetchSearchCoins
     func fetchSearchCoins(keyword: String, limit: Int, completion: @escaping ((Result<CoinRankingResponseModel>) -> Void)) {
         self.useCase.searchCoin(keyword: keyword, limit: limit)
+            .delay(for: 1.0, scheduler: DispatchQueue.main, options: .none)
             .sink(receiveCompletion: { complete in
                 switch complete {
                 case .finished:
@@ -90,17 +107,17 @@ public class HomeViewModel: ObservableObject {
         let coins = object.data.coins
         var deck: [CoinItemModel] = []
         for coin in coins {
-            let price: Double  = Double(coin.price) ?? 0
-            let change: Double = Double(coin.change) ?? 0
+            let price: Double  = Double(coin.price ?? "0") ?? 0
+            let change: Double = Double(coin.change ?? "0.0") ?? 0
             let isChangePositive: Bool = {
                 return change >= 0 ? true : false
             }()
-            let item = CoinItemModel(iconUrl: coin.iconURL,
-                                     name: coin.name,
-                                     symbol: coin.symbol,
+            let item = CoinItemModel(iconUrl: coin.iconURL ?? "",
+                                     name: coin.name ?? "",
+                                     symbol: coin.symbol ?? "",
                                      price: price,
                                      change: change,
-                                     uuid: coin.uuid,
+                                     uuid: coin.uuid ?? "",
                                      isChangePositive: isChangePositive)
             deck.append(item)
         }

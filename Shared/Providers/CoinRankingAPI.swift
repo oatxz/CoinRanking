@@ -32,9 +32,7 @@ extension CoinRankingAPI: TargetType {
     
     public var method: Moya.Method {
         switch self {
-        case .getCoins(limit:_), .searchCoin(keyword: _, limit: _):
-            return .get
-        case .getCoinDetail(uuid: _):
+        case .getCoins, .searchCoin, .getCoinDetail:
             return .get
         }
     }
